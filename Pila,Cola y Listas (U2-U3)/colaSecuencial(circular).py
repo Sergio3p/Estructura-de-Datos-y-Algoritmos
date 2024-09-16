@@ -16,18 +16,20 @@ class colaSecuencial:
     
     def insertar(self,x):
         if self.llena():
-            raise Exception('La cola está llena')
-        self.__lista[self.__ul] = x
-        self.__ul = (self.__ul + 1) % self.__max
-        self.__cant_elementos += 1
+            print('La cola está llena')
+        else:
+            self.__lista[self.__ul] = x
+            self.__ul = (self.__ul + 1) % self.__max
+            self.__cant_elementos += 1
     
     def suprimir(self):
         if self.vacia():
-            raise Exception('La cola está vacía')
-        x = self.__lista[self.__pr]
-        self.__pr = (self.__pr + 1) % self.__max
-        self.__cant_elementos -= 1
-        return x
+            print('La cola está vacía')
+        else:
+            x = self.__lista[self.__pr]
+            self.__pr = (self.__pr + 1) % self.__max
+            self.__cant_elementos -= 1
+            return x
 
     def recorrer(self):
         if self.vacia():
@@ -46,6 +48,8 @@ if __name__=="__main__":
     cola.insertar(10)
     cola.insertar(15)
     cola.insertar(20)
+    cola.insertar(25) 
     cola.recorrer()
+    cola.insertar(30)
     cola.suprimir()
     cola.recorrer()

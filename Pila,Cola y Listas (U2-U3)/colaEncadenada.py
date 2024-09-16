@@ -11,7 +11,6 @@ class Nodo:
     
     def setSiguiente(self, dato):
         self.__sig = dato
-    
 
 class colaEncadenada:
     def __init__(self):
