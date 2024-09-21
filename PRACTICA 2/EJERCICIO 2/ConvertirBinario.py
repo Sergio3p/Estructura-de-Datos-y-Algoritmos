@@ -1,49 +1,48 @@
-class PilaSecuencial: 
-    lista: list
-    tope: int           
-    cant: int           
+import numpy as np
 
-    def __init__(self): 
-        self.tope = -1  
-        self.cant = 8                   # Por ser un número binario de 8 bits.
-        self.lista = [None] * self.cant 
-        
-    def vacia(self): 
-        return self.tope == -1
-        
-    def insertar(self, elemento):
-        cant = self.cant - 1
-        if self.tope < cant:      
-            self.tope += 1        
-            self.lista[self.tope] = elemento  
+class PilaSecuencial:
+    def __init__(self,xmax):
+        self.__pila = np.zeros(xmax, dtype=int)
+        self.__cant = 0
+        self.__max = xmax
+    
+    def vacia(self):
+        return self.__cant == 0
+    
+    def llena(self):
+        return self.__cant == self.__max
+    
+    def insertar(self,x):
+        if self.llena():
+            print("La pila está llena")
         else:
-            print("\nLa lista está llena.")
-
-    def suprimir(self): 
+            self.__pila[self.__cant] = x
+            self.__cant += 1
+    
+    def suprimir(self):
         if self.vacia():
-            print("\nLa pila está vacía")
+            print("La pila está vacía")
         else:
-            elemento = self.lista[self.tope]    
-            self.tope -= 1                      
-            print(f"\nSe suprimió el elemento {elemento}")
-        
-    def mostrar(self): 
+            self.__cant -= 1
+            return self.__pila[self.__cant]
+    
+    def recorrer(self):
         if self.vacia():
-            print("\nLa pila está vacía.")
+            print("La pila está vacía")
         else:
-            print("\nPila: ", end='')       
-            for i in range(self.tope, -1, -1):  
-                print(self.lista[i], end=' ')
-            print("\n")
-
-    def convertirBinario(self,num:int):
-        while num > 0:
-            resto = num % 2
+            for i in range(self.__cant-1, -1, -1):
+                print(self.__pila[i], end=" ")
+            print()
+        
+    def decimalABinario(self,x):
+        while 0 < x:
+            resto = x % 2
             self.insertar(resto)
-            num = num // 2
+            x = x // 2
+        self.recorrer()
 
-if __name__ == '__main__':
-    elemento = PilaSecuencial()
-    elemento.convertirBinario(50)
-    elemento.mostrar()
+if __name__ == "__main__":
+    pila = PilaSecuencial(8)
+    pila.decimalABinario(4)
+
     
