@@ -22,39 +22,49 @@ class listaEncadenada:
     def vacia(self):
         return self.__cant == 0
     
-    def insertar(self, pos, x):
-        if pos < 1 or pos > self.__cant + 1:
-            print("posición invalida")
+    def insertar(self, x):
+        nuevo = Nodo(x)
+        # Si la lista está vacía o el nuevo elemento debe ir al principio
+        if self.__cabeza is None or self.__cabeza.get_dato() >= x:
+            nuevo.set_sig(self.__cabeza)
+            self.__cabeza = nuevo
         else:
-            nuevo = Nodo(x)
-            if pos == 1:
-                nuevo.set_sig(self.__cabeza)
-                self.__cabeza = nuevo
-            else:
-                aux = self.__cabeza
-                for _ in range(pos - 2):  # Ajuste en el rango
-                    aux = aux.get_sig()
-                
-                nuevo.set_sig(aux.get_sig())
-                aux.set_sig(nuevo)
-            self.__cant += 1  # Aumentar el contador al insertar
+            # Encuentra la posición correcta para insertar el nuevo elemento
+            actual = self.__cabeza
+            while actual.get_sig() is not None and actual.get_sig().get_dato() < x:
+                actual = actual.get_sig()
+            # Inserta el nuevo elemento
+            nuevo.set_sig(actual.get_sig())
+            actual.set_sig(nuevo)
+        self.__cant += 1
     
     def suprimir(self, pos):
-        if self.vacia() or pos < 1 or pos > self.__cant:
-            print("Posición inválida o lista vacía")
-        else:
-            if pos == 1:
-                aux = self.__cabeza.get_dato()
-                self.__cabeza = self.__cabeza.get_sig()
-            else:
-                aux = self.__cabeza
-                for _ in range(pos - 2):  # Ajuste en el rango
-                    aux = aux.get_sig()
+        if 1 > pos > self.__cant:
+            print("Error: Posición no válida.")
+            return
 
-                suprimir = aux.get_sig()
-                valor = suprimir.get_dato()
-                aux.set_sig(suprimir.get_sig())
-            self.__cant -= 1  # Disminuir el contador al eliminar
+        # Caso especial: eliminar el primer nodo
+        if pos == 1:
+            self.__cabeza = self.__cabeza.get_sig()
+        else:
+            actual = self.__cabeza
+            # Navegar hasta el nodo anterior al que se quiere eliminar
+            for i in range(1, pos - 1):
+                if actual is None:
+                    print("Error: Posición no válida.")
+                    return
+                actual = actual.get_sig()
+
+            # Verificar si se encontró el nodo en la posición deseada
+            siguiente = actual.get_sig()
+            if siguiente is not None:
+                # Eliminar el nodo en la posición dada
+                actual.set_sig(siguiente.get_sig())
+            else:
+                print("Error: Posición no válida.")
+                return
+
+        self.__cant -= 1
     
     def recuperar(self, pos):
         if self.vacia() or pos < 1 or pos > self.__cant:
@@ -124,11 +134,11 @@ class listaEncadenada:
 
 if __name__ == "__main__":
     lista_enc = listaEncadenada()
-    lista_enc.insertar(1, 1)
-    lista_enc.insertar(2, 2)
-    lista_enc.insertar(3, 3)
-    lista_enc.insertar(4, 4)
-    lista_enc.insertar(5,8)
+    lista_enc.insertar(7)
+    lista_enc.insertar(3)
+    lista_enc.insertar(1)
+    lista_enc.insertar(4)
+    lista_enc.insertar(9)
     lista_enc.recuperar(3)
     lista_enc.recorrer()
     lista_enc.suprimir(2)

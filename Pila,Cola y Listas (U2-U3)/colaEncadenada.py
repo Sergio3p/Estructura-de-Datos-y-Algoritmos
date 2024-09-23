@@ -35,10 +35,12 @@ class colaEncadenada:
             print("La cola está vacía")
             return
         else:
+            dato = self.__pr.getDato()
             self.__pr = self.__pr.getSiguiente()
             self.__cant -= 1
             if self.vacia():
                 self.__ul = None
+            return dato
         
     def recorrer(self):
         if self.vacia():
@@ -57,5 +59,5 @@ if __name__=="__main__":
     cola.insertar(15)
     cola.insertar(20)
     cola.recorrer()
-    cola.suprimir()
+    print(f"{cola.suprimir()}")
     cola.recorrer()

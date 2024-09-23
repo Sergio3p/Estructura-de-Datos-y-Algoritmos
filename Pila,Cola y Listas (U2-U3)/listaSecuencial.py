@@ -15,7 +15,7 @@ class listaSecuencial:
     def insertar(self,pos,x):
         if self.llena():
             print("La lista está llena")
-        elif 0 < pos < self.__max+1:
+        elif 0 <= pos <= self.__cant+1:
             for i in range(self.__cant, pos-1, -1):
                 self.__lista[i] = self.__lista[i-1]
             self.__lista[pos-1] = x
@@ -23,19 +23,19 @@ class listaSecuencial:
         else:
             print("Posición inválida")
     
-    def suprimir(self,pos):
+    def suprimir(self, pos):
         if self.vacia():
             print("La lista está vacía")
         else:
-            for i in range(pos-1,self.__cant-1):
-                self.__lista[i] = self.__lista[i+1]
-            self.__lista[self.__cant] = 0 # Para evitar basura en memoria podemos poner tambien None
+            for i in range(pos - 1, self.__cant - 1):
+                self.__lista[i] = self.__lista[i + 1]
+            self.__lista[self.__cant - 1] = 0  # Corregido: asignar a self.__cant - 1
             self.__cant -= 1
             
     def recuperar(self,pos): #posición
         if self.vacia(): 
             print("La lista está vacía")
-        elif 0 < pos < self.__max+1:
+        elif 0 < pos < self.__cant+1:
             print(f"En la posición {pos} se encuentra: {self.__lista[pos-1]}")
         else:
             print("Posición inválida")
@@ -96,7 +96,7 @@ if __name__ == "__main__":
     lista_sec.insertar(3,3)
     lista_sec.insertar(5,3)
     lista_sec.recorrer()
-    #lista_sec.suprimir(1)
+    lista_sec.suprimir(1)
     lista_sec.recorrer()
     lista_sec.recuperar(2)
     lista_sec.buscar(3)
